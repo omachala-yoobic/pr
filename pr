@@ -104,8 +104,21 @@ clear
 # choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
 # clear
 
-foo=`echo $(echo ${REVIEWERS[@]}) | tr ' ' ','`
-echo foo
+rews=()
+
+for i in "${REVIEWERS[@]}"
+do
+   :
+   case $PROJECTTYPE in
+        1) rews=( "${rews[@]}" "ghaiat" ) ;;
+        2) rews=( "${rews[@]}" "Edd-Strickland" ) ;;
+        3) rews=( "${rews[@]}" "tkiddleYoobic" ) ;;
+   esac                                                                                                   
+done
+
+bar=$(printf ",%s" "${rews[@]}")
+bar=${bar:1}
+echo $bar
 
 # echo $REVIEWERS
 # echo $TITLE
