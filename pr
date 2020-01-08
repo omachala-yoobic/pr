@@ -108,6 +108,7 @@ clear
 # echo $TITLE
 # echo $JIRA
 
+
 BODY="$TITLE \n\n
 ## PR Summary:\n\n
 ### associated ticket:\n\n
