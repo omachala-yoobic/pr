@@ -117,7 +117,6 @@ do
 done
 
 bar=$(printf ",%s" "${rews[@]}")
-bar=${bar:1}
 echo $bar
 
 # echo $REVIEWERS
