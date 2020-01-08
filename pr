@@ -119,7 +119,7 @@ do
    esac                                                                                                   
 done
 
-echo rews
+echo $rews
 
 bar=$(printf ",%s" "${rews[@]}")
 echo $bar
