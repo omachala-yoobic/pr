@@ -104,13 +104,8 @@ clear
 # choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
 # clear
 
-join () {
-  local IFS="$1"
-  shift
-  echo "$*"
-}
-
-echo join , "${data[@]}"
+foo=`echo $(echo ${REVIEWERS[@]}) | tr ' ' ','`
+echo foo
 
 # echo $REVIEWERS
 # echo $TITLE
