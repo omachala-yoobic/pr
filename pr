@@ -108,8 +108,10 @@ clear
 # echo $TITLE
 # echo $JIRA
 
-hub pull-request --push --draft --message "$TITLE \n\n
+BODY="$TITLE \n\n
 ## PR Summary:\n\n
 ### associated ticket:\n\n
 - $JIRA"
+
+hub pull-request --push --draft --message "$(printf "$BODY")"
 
