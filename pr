@@ -18,13 +18,13 @@ echo_color() {
 command -v dialog >/dev/null 2>&1 || { echo >&2 "Please install DIALOG: brew install dialog"; exit 0; }
 command -v hub >/dev/null 2>&1 || { echo >&2 "Please install HUB: brew install hub"; exit 0; }
 
-if [[ -z $(git status -s) ]]
-then
-  echo "Tree is clean"
-else
-  echo_color "\nTree is dirty, please commit changes before running! \r\n" $color_red
-  exit
-fi
+# if [[ -z $(git status -s) ]]
+# then
+#   echo "Tree is clean"
+# else
+#   echo_color "\nTree is dirty, please commit changes before running! \r\n" $color_red
+#   exit
+# fi
 
 HEIGHT=15
 WIDTH=40
@@ -104,29 +104,36 @@ clear
 # choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
 # clear
 
+arr=($REVIEWERS)
 REWS=""
+# echo $REVIEWERS
 
-for i in "${REVIEWERS[@]}"
-do
-   :
+for i in "${arr[@]}"
+do :
    case $i in
         1) REWS+="ghaiat," ;;
         2) REWS+="Edd-Strickland," ;;
         3) REWS+="tkiddleYoobic," ;;
+        4) REWS+="miguelyoobic95," ;;
+        5) REWS+="raphrak," ;;
+        6) REWS+="omachala-yoobic," ;;
+        7) REWS+="weiz18," ;;
+        8) REWS+="darondel-yoobic," ;;
+        9) REWS+="benAkehurst," ;;
+        10) REWS+="BenMorganYobbic," ;;
+        11) REWS+="ubalensi-yoobic," ;;
+        12) REWS+="crheaumet," ;;
+        13) REWS+="emilieYoobic," ;;
+        14) REWS+="Jbernardyoobic," ;;
+        15) REWS+="gabides," ;;
    esac                                                                                                   
 done
 
-echo $REWS
 
-# echo $REVIEWERS
-# echo $TITLE
-# echo $JIRA
+BODY="$TITLE \n\n
+## PR Summary:\n\n
+### Associated ticket:\n\n
+- $JIRA"
 
-
-# BODY="$TITLE \n\n
-# ## PR Summary:\n\n
-# ### Associated ticket:\n\n
-# - $JIRA"
-
-# hub pull-request --push --draft --message "$(printf "$BODY")"
+hub pull-request --push --draft --reviewer $REWS --message "$(printf "$BODY")"
 
