@@ -4,9 +4,11 @@ read -p "Task type? (fix, feat): " taskType
 read -p "Message: " message
 read -p "JIRA ticket: " jiraTicket
 
-pr = "[$project] [$taskType] $message"
+pr="[$project] [$taskType] $message"
 
-content = "JIRA ticket: \
+
+content="JIRA ticket: \
 - $jiraTicket"
 
-hub pull-request --push --draft --message '$pr'
+
+hub pull-request --push --draft --message "$pr"
