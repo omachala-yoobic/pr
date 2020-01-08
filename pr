@@ -4,6 +4,7 @@ read -p "Task type? (fix, feat): " taskType
 read -p "Message: " message
 read -p "JIRA ticket: " jiraTicket
 
+
 pr="[$project] [$taskType] $message"
 
 
