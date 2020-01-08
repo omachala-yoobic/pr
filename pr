@@ -109,7 +109,7 @@ REWS=""
 for i in "${REVIEWERS[@]}"
 do
    :
-   case $PROJECTTYPE in
+   case $i in
         1) REWS+="ghaiat," ;;
         2) REWS+="Edd-Strickland," ;;
         3) REWS+="tkiddleYoobic," ;;
