@@ -9,4 +9,4 @@ pr = "[$project] [$taskType] $message"
 content = "JIRA ticket: \
 - $jiraTicket"
 
-hub pull-request --push --message \"$pr\"
+hub pull-request --push --draft --message '$pr'
