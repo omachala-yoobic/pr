@@ -104,25 +104,19 @@ clear
 # choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
 # clear
 
-rews=()
+REWS=""
 
 for i in "${REVIEWERS[@]}"
 do
    :
    case $PROJECTTYPE in
-        1) rews=( "${rews[@]}" "ghaiat" )
-        ;;
-        2) rews=( "${rews[@]}" "Edd-Strickland" )
-        ;;
-        3) rews=( "${rews[@]}" "tkiddleYoobic" )
-        ;;
+        1) REWS+="ghaiat," ;;
+        2) REWS+="Edd-Strickland," ;;
+        3) REWS+="tkiddleYoobic," ;;
    esac                                                                                                   
 done
 
-echo $rews
-
-bar=$(printf ",%s" "${rews[@]}")
-echo $bar
+echo $REWS
 
 # echo $REVIEWERS
 # echo $TITLE
