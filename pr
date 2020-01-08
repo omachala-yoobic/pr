@@ -110,11 +110,16 @@ for i in "${REVIEWERS[@]}"
 do
    :
    case $PROJECTTYPE in
-        1) rews=( "${rews[@]}" "ghaiat" ) ;;
-        2) rews=( "${rews[@]}" "Edd-Strickland" ) ;;
-        3) rews=( "${rews[@]}" "tkiddleYoobic" ) ;;
+        1) rews=( "${rews[@]}" "ghaiat" )
+        ;;
+        2) rews=( "${rews[@]}" "Edd-Strickland" )
+        ;;
+        3) rews=( "${rews[@]}" "tkiddleYoobic" )
+        ;;
    esac                                                                                                   
 done
+
+echo rews
 
 bar=$(printf ",%s" "${rews[@]}")
 echo $bar
