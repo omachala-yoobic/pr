@@ -104,15 +104,23 @@ clear
 # choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
 # clear
 
+join () {
+  local IFS="$1"
+  shift
+  echo "$*"
+}
+
+echo join , "${data[@]}"
+
 # echo $REVIEWERS
 # echo $TITLE
 # echo $JIRA
 
 
-BODY="$TITLE \n\n
-## PR Summary:\n\n
-### associated ticket:\n\n
-- $JIRA"
+# BODY="$TITLE \n\n
+# ## PR Summary:\n\n
+# ### Associated ticket:\n\n
+# - $JIRA"
 
-hub pull-request --push --draft --message "$(printf "$BODY")"
+# hub pull-request --push --draft --message "$(printf "$BODY")"
 
