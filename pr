@@ -33,7 +33,8 @@ CHOICE_HEIGHT=4
 PROJECTTYPES=(
     1 "Operations"
     2 "Boost"
-    3 "YOBI Design System"
+    3 "YOBI Design System",
+    4 "Dev Ops"
 )
 
 REVIEWERSLIST=(
@@ -54,6 +55,10 @@ REVIEWERSLIST=(
     15 "Gabriel" off # gabides
 )
 
+echo_color "\nDo you want to make pull request for this files? \r\n" $color_yellow
+git diff --name-only master
+read -p "Press enter to continue"
+
 PROJECTTYPE=$(dialog --clear \
             --no-cancel \
             --title " YOOBIC PULL REQUEST " \
@@ -66,25 +71,26 @@ clear
 TITLE=""
 
 case $PROJECTTYPE in
-        1)
-            TITLE+="Boost - "
-            ;;
-        2)
-            TITLE+="Operations - "
-            ;;
-        3)
-            TITLE+="YOBI - "
-            ;;
+        1) TITLE+="Boost - " ;;
+        2) TITLE+="Operations - " ;;
+        3) TITLE+="YOBI - " ;;
+        4) TITLE+="DevOps - " ;;
 esac
 
 
-MESSAGE=$(dialog --title " Message " \
+MESSAGE=$(dialog --title " Title " \
             --no-cancel \
-            --inputbox "Describe your changes " 8 60 \
+            --inputbox "Pull Request Title " 8 60 \
             2>&1 >/dev/tty)
 clear
 
 TITLE+=$MESSAGE
+
+CHANGES=$(dialog --title " Description " \
+            --no-cancel \
+            --inputbox "Describe your changes " 8 60 \
+            2>&1 >/dev/tty)
+clear
 
 JIRA=$(dialog --title " JIRA " \
             --no-cancel \
@@ -100,14 +106,8 @@ REVIEWERS=$(dialog --title " Reviewers " \
             2>&1 >/dev/tty)
 clear
 
-# cmd=(dialog --separate-output --checklist "Choose at least one reviewer " 22 76 16)
-# choices=$("${cmd[@]}" "${REVIEWERSLIST[@]}" 2>&1 >/dev/tty)
-# clear
-
 arr=($REVIEWERS)
 REWS=""
-# echo $REVIEWERS
-
 for i in "${arr[@]}"
 do :
    case $i in
@@ -130,7 +130,9 @@ do :
 done
 
 BODY="$TITLE \n\n
-## PR Summary:\n\n
+## Summary:\n\n
+### Desription:\n\n
+- $CHANGES
 ### Associated ticket:\n\n
 - $JIRA"
 
