@@ -57,7 +57,7 @@ REVIEWERSLIST=(
 
 echo_color "Do you want to make pull request for this files?" $color_yellow
 git diff --name-only master
-read -p "Press enter to continue"
+read -p "[Enter to continue]"
 
 PROJECTTYPE=$(dialog --clear \
             --no-cancel \
