@@ -18,13 +18,13 @@ echo_color() {
 command -v dialog >/dev/null 2>&1 || { echo >&2 "Please install DIALOG: brew install dialog"; exit 0; }
 command -v hub >/dev/null 2>&1 || { echo >&2 "Please install HUB: brew install hub"; exit 0; }
 
-# if [[ -z $(git status -s) ]]
-# then
-#   echo "Tree is clean"
-# else
-#   echo_color "\nTree is dirty, please commit changes before running! \r\n" $color_red
-#   exit
-# fi
+if [[ -z $(git status -s) ]]
+then
+  echo "Tree is clean"
+else
+  echo_color "\nTree is dirty, please commit changes before running! \r\n" $color_red
+  exit
+fi
 
 HEIGHT=15
 WIDTH=40
