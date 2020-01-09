@@ -55,7 +55,7 @@ REVIEWERSLIST=(
     15 "Gabriel" off # gabides
 )
 
-echo_color "\nDo you want to make pull request for this files? \r\n" $color_yellow
+echo_color "Do you want to make pull request for this files?" $color_yellow
 git diff --name-only master
 read -p "Press enter to continue"
 
