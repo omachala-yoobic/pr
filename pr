@@ -33,7 +33,7 @@ CHOICE_HEIGHT=4
 PROJECTTYPES=(
     1 "Operations"
     2 "Boost"
-    3 "YOBI Design System",
+    3 "YOBI Design System"
     4 "Dev Ops"
 )
 
