@@ -132,7 +132,7 @@ done
 BODY="$TITLE \n\n
 ## Summary:\n\n
 ### Desription:\n\n
-- $CHANGES
+- $CHANGES\n\n
 ### Associated ticket:\n\n
 - $JIRA"
 
