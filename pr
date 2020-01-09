@@ -20,7 +20,7 @@ command -v hub >/dev/null 2>&1 || { echo >&2 "Please install HUB: brew install h
 
 if [[ -z $(git status -s) ]]
 then
-  echo_color "Do you want to make pull request for this files?" $color_yellow
+  echo_color "Do you want to make pull request with following files?" $color_yellow
   git diff --name-only master
   read -p "[Enter to continue]"
 else
