@@ -139,9 +139,9 @@ $CHANGES\n\n
 ### Associated ticket\n\n
 $JIRA"
 
-$REWSFLAG=""
+REWSFLAG=""
 if [ ! -z "$REWS" ]; then
-  $REWSFLAG="--reviewer $REWS"
+  REWSFLAG="--reviewer $REWS"
 fi
 
 hub pull-request --push --draft $REWSFLAG --message "$(printf "$BODY")"
