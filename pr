@@ -1,0 +1,147 @@
+#!/bin/bash
+# source ./helpers/echo-utils.sh
+# source ./helpers/prompts.sh
+
+color_normal="\x1B[0m"
+color_red="\x1B[31m"
+color_green="\x1B[32m"
+color_yellow="\x1B[33m"
+color_blue="\x1B[34m"
+color_magenta="\x1B[35m"
+color_cyan="\x1B[36m"
+color_white="\x1B[37m"
+
+echo_color() {
+  message=$1
+  color=${2:-$color_normal}
+  printf "$color$message $color_normal\n"
+}
+
+command -v dialog >/dev/null 2>&1 || { echo >&2 "Please install DIALOG: brew install dialog"; exit 0; }
+command -v hub >/dev/null 2>&1 || { echo >&2 "Please install HUB: brew install hub"; exit 0; }
+
+if [[ -z $(git status -s) ]]
+then
+  echo_color "Do you want to make pull request with following files?" $color_yellow
+  for i in $(git diff --name-only master)
+    do
+      echo_color "> $i" $color_blue
+    done
+  read -p "[Enter to continue]"
+else
+  echo_color "\nTree is dirty, please commit changes before running! \r\n" $color_red
+  exit
+fi
+
+HEIGHT=15
+WIDTH=40
+CHOICE_HEIGHT=4
+
+PROJECTTYPES=(
+    1 "Operations"
+    2 "Boost"
+    3 "YOBI Design System"
+    4 "Dev Ops"
+)
+
+REVIEWERSLIST=(
+    1 "Gilles" off # ghaiat
+    2 "Edd" off # Edd-Strickland
+    3 "Tom" off # tkiddleYoobic
+    4 "Miguel" off # miguelyoobic95
+    5 "Raph" off # raphrak
+    6 "Ondrej" off # omachala-yoobic
+    7 "Wei" off # weiz18
+    8 "Damien" off # darondel-yoobic
+    9 "Ben A." off # BenYoobic
+    10 "Ben M." off # BenMorganYobbic
+    11 "Ugo" off # ubalensi-yoobic
+    12 "Cam" off # crheaumet
+    13 "Emilie" off # emilieYoobic
+    14 "Jacob" off # Jbernardyoobic
+    15 "Gabriel" off # gabides
+)
+
+PROJECTTYPE=$(dialog --clear \
+            --no-cancel \
+            --title " YOOBIC PULL REQUEST " \
+            --menu "Choose project:" \
+            $HEIGHT $WIDTH $CHOICE_HEIGHT \
+            "${PROJECTTYPES[@]}" \
+            2>&1 >/dev/tty)
+clear
+
+TITLE=""
+
+case $PROJECTTYPE in
+        1) TITLE+="Boost - " ;;
+        2) TITLE+="Operations - " ;;
+        3) TITLE+="YOBI - " ;;
+        4) TITLE+="DevOps - " ;;
+esac
+
+
+MESSAGE=$(dialog --title " Title " \
+            --no-cancel \
+            --inputbox "Short title message " 8 60 \
+            2>&1 >/dev/tty)
+clear
+
+TITLE+=$MESSAGE
+
+CHANGES=$(dialog --title " Describe your changes  " \
+            --no-cancel \
+            --editbox changes.md 15 60 \
+            2>&1 >/dev/tty)
+clear
+
+JIRA=$(dialog --title " JIRA tickets " \
+            --no-cancel \
+            --editbox jira.md 15 60 \
+            2>&1 >/dev/tty)
+clear
+
+REVIEWERS=$(dialog --title " Reviewers " \
+            --separate-output \
+            --checklist "Choose at least one reviewer" \
+            22 76 16 \
+            "${REVIEWERSLIST[@]}" \
+            2>&1 >/dev/tty)
+clear
+
+arr=($REVIEWERS)
+REWS=""
+for i in "${arr[@]}"
+do :
+   case $i in
+        1) REWS+="ghaiat," ;;
+        2) REWS+="Edd-Strickland," ;;
+        3) REWS+="tkiddleYoobic," ;;
+        4) REWS+="miguelyoobic95," ;;
+        5) REWS+="raphrak," ;;
+        6) REWS+="omachala-yoobic," ;;
+        7) REWS+="weiz18," ;;
+        8) REWS+="darondel-yoobic," ;;
+        9) REWS+="BenYoobic," ;;
+        10) REWS+="BenMorganYobbic," ;;
+        11) REWS+="ubalensi-yoobic," ;;
+        12) REWS+="crheaumet," ;;
+        13) REWS+="emilieYoobic," ;;
+        14) REWS+="Jbernardyoobic," ;;
+        15) REWS+="gabides," ;;
+   esac                                                                                                   
+done
+
+BODY="$TITLE \n\n
+## Summary\n\n
+### Desription\n\n
+$CHANGES\n\n
+### Associated ticket\n\n
+$JIRA"
+
+REWSFLAG=""
+if [ ! -z "$REWS" ]; then
+  REWSFLAG="--reviewer $REWS"
+fi
+
+hub pull-request --push --draft $REWSFLAG --message "$(printf "$BODY")"
